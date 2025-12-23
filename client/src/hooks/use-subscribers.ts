@@ -7,7 +7,7 @@ export function useCreateSubscriber() {
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: async (data: InsertSubscriber) => {
+    mutationFn: async (data: any) => {
       const res = await fetch(api.subscribers.create.path, {
         method: api.subscribers.create.method,
         headers: { "Content-Type": "application/json" },
