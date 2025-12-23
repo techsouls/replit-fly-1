@@ -7,7 +7,7 @@ export function useCreateContactMessage() {
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: async (data: InsertContactMessage) => {
+    mutationFn: async (data: any) => {
       const res = await fetch(api.contact.create.path, {
         method: api.contact.create.method,
         headers: { "Content-Type": "application/json" },
