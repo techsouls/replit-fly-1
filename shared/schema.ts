@@ -1,34 +1,37 @@
-import { pgTable, text, serial, timestamp, boolean } from "drizzle-orm/pg-core";
-import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
-export const subscribers = pgTable("subscribers", {
-  id: serial("id").primaryKey(),
-  email: text("email").notNull().unique(),
-  role: text("role", { enum: ["traveler", "helper", "both"] }).default("both"),
-  createdAt: timestamp("created_at").defaultNow(),
+export const subscriberSchema = z.object({
+  id: z.string(),
+  email: z.string().email(),
+  role: z.enum(["traveler", "helper", "both"]),
+  createdAt: z.date(),
 });
 
-export const contactMessages = pgTable("contact_messages", {
-  id: serial("id").primaryKey(),
-  name: text("name").notNull(),
-  email: text("email").notNull(),
-  message: text("message").notNull(),
-  createdAt: timestamp("created_at").defaultNow(),
+export const journeySchema = z.object({
+  id: z.string(),
+  userId: z.string(),
+  departureCity: z.string(),
+  arrivalCity: z.string(),
+  departureDate: z.string(),
+  description: z.string(),
+  lookingFor: z.enum(["help", "offer-help", "both"]),
+  createdAt: z.date(),
 });
 
-export const insertSubscriberSchema = createInsertSchema(subscribers).pick({
-  email: true,
-  role: true,
+export const insertSubscriberSchema = z.object({
+  email: z.string().email(),
+  role: z.enum(["traveler", "helper", "both"]).default("both"),
 });
 
-export const insertContactSchema = createInsertSchema(contactMessages).pick({
-  name: true,
-  email: true,
-  message: true,
+export const insertJourneySchema = z.object({
+  departureCity: z.string().min(1),
+  arrivalCity: z.string().min(1),
+  departureDate: z.string().min(1),
+  description: z.string().min(1),
+  lookingFor: z.enum(["help", "offer-help", "both"]),
 });
 
-export type Subscriber = typeof subscribers.$inferSelect;
+export type Subscriber = z.infer<typeof subscriberSchema>;
 export type InsertSubscriber = z.infer<typeof insertSubscriberSchema>;
-export type ContactMessage = typeof contactMessages.$inferSelect;
-export type InsertContactMessage = z.infer<typeof insertContactSchema>;
+export type Journey = z.infer<typeof journeySchema>;
+export type InsertJourney = z.infer<typeof insertJourneySchema>;

@@ -1,43 +1,11 @@
 import { z } from 'zod';
-import { insertSubscriberSchema, insertContactSchema, subscribers, contactMessages } from './schema';
+import { insertSubscriberSchema, insertJourneySchema } from './schema';
 
 export const errorSchemas = {
   validation: z.object({
     message: z.string(),
     field: z.string().optional(),
   }),
-  conflict: z.object({
-    message: z.string(),
-  }),
-  internal: z.object({
-    message: z.string(),
-  }),
-};
-
-export const api = {
-  subscribers: {
-    create: {
-      method: 'POST' as const,
-      path: '/api/subscribers',
-      input: insertSubscriberSchema,
-      responses: {
-        201: z.custom<typeof subscribers.$inferSelect>(),
-        409: errorSchemas.conflict,
-        400: errorSchemas.validation,
-      },
-    },
-  },
-  contact: {
-    create: {
-      method: 'POST' as const,
-      path: '/api/contact',
-      input: insertContactSchema,
-      responses: {
-        201: z.custom<typeof contactMessages.$inferSelect>(),
-        400: errorSchemas.validation,
-      },
-    },
-  },
 };
 
 export function buildUrl(path: string, params?: Record<string, string | number>): string {
@@ -51,3 +19,6 @@ export function buildUrl(path: string, params?: Record<string, string | number>)
   }
   return url;
 }
+
+export type SubscriberInput = z.infer<typeof insertSubscriberSchema>;
+export type JourneyInput = z.infer<typeof insertJourneySchema>;
