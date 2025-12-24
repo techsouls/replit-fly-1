@@ -17,13 +17,8 @@ type FormData = z.infer<typeof formSchema>;
 
 export default function Contact() {
   const { mutate, isPending } = useCreateContactMessage();
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<FormData>({
+  
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>({
     resolver: zodResolver(formSchema),
   });
 
@@ -31,7 +26,7 @@ export default function Contact() {
     mutate(data, {
       onSuccess: () => {
         reset();
-      },
+      }
     });
   };
 
@@ -41,15 +36,13 @@ export default function Contact() {
 
       <div className="flex-grow pt-32 pb-20 container mx-auto px-4 md:px-6">
         <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+          
           {/* Left Column: Info */}
           <div className="space-y-8">
             <div>
-              <h1 className="text-4xl md:text-5xl font-bold font-display text-foreground mb-4">
-                Get in Touch
-              </h1>
+              <h1 className="text-4xl md:text-5xl font-bold font-display text-foreground mb-4">Get in Touch</h1>
               <p className="text-xl text-muted-foreground">
-                Have questions about how Fly Companion works? Want to partner
-                with us? We'd love to hear from you.
+                Have questions about how TravelTogether works? Want to partner with us? We'd love to hear from you.
               </p>
             </div>
 
@@ -60,12 +53,8 @@ export default function Contact() {
                 </div>
                 <div>
                   <h3 className="font-bold text-lg mb-1">Email Us</h3>
-                  <p className="text-muted-foreground">
-                    support@fly-companion.com
-                  </p>
-                  <p className="text-muted-foreground">
-                    partners@fly-companion.com
-                  </p>
+                  <p className="text-muted-foreground">support@traveltogether.com</p>
+                  <p className="text-muted-foreground">partners@traveltogether.com</p>
                 </div>
               </div>
 
@@ -75,9 +64,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <h3 className="font-bold text-lg mb-1">Live Chat</h3>
-                  <p className="text-muted-foreground">
-                    Available Mon-Fri, 9am - 5pm EST
-                  </p>
+                  <p className="text-muted-foreground">Available Mon-Fri, 9am - 5pm EST</p>
                 </div>
               </div>
             </div>
@@ -88,65 +75,47 @@ export default function Contact() {
             <CardContent className="p-8">
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                 <div className="space-y-2">
-                  <Label htmlFor="name" className="font-medium">
-                    Full Name
-                  </Label>
+                  <Label htmlFor="name" className="font-medium">Full Name</Label>
                   <div className="relative">
                     <User className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
-                    <Input
-                      id="name"
-                      placeholder="Jane Doe"
-                      className="pl-10 h-12"
+                    <Input 
+                      id="name" 
+                      placeholder="Jane Doe" 
+                      className="pl-10 h-12" 
                       {...register("name")}
                     />
                   </div>
-                  {errors.name && (
-                    <p className="text-destructive text-sm">
-                      {errors.name.message}
-                    </p>
-                  )}
+                  {errors.name && <p className="text-destructive text-sm">{errors.name.message}</p>}
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="email" className="font-medium">
-                    Email Address
-                  </Label>
+                  <Label htmlFor="email" className="font-medium">Email Address</Label>
                   <div className="relative">
                     <Mail className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="jane@example.com"
-                      className="pl-10 h-12"
+                    <Input 
+                      id="email" 
+                      type="email" 
+                      placeholder="jane@example.com" 
+                      className="pl-10 h-12" 
                       {...register("email")}
                     />
                   </div>
-                  {errors.email && (
-                    <p className="text-destructive text-sm">
-                      {errors.email.message}
-                    </p>
-                  )}
+                  {errors.email && <p className="text-destructive text-sm">{errors.email.message}</p>}
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="message" className="font-medium">
-                    Message
-                  </Label>
-                  <Textarea
-                    id="message"
-                    placeholder="How can we help you?"
-                    className="min-h-[150px] resize-none text-base"
+                  <Label htmlFor="message" className="font-medium">Message</Label>
+                  <Textarea 
+                    id="message" 
+                    placeholder="How can we help you?" 
+                    className="min-h-[150px] resize-none text-base" 
                     {...register("message")}
                   />
-                  {errors.message && (
-                    <p className="text-destructive text-sm">
-                      {errors.message.message}
-                    </p>
-                  )}
+                  {errors.message && <p className="text-destructive text-sm">{errors.message.message}</p>}
                 </div>
 
-                <Button
-                  type="submit"
+                <Button 
+                  type="submit" 
                   disabled={isPending}
                   className="w-full h-12 text-lg font-semibold bg-primary hover:bg-primary/90 text-white shadow-lg"
                 >

@@ -1,13 +1,12 @@
 import { useMutation } from "@tanstack/react-query";
-// import { api, type InsertSubscriber } from "@shared/routes";
-import { api } from "@shared/routes";
+import { api, type InsertSubscriber } from "@shared/routes";
 import { useToast } from "@/hooks/use-toast";
 
 export function useCreateSubscriber() {
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: async (data: any) => {
+    mutationFn: async (data: InsertSubscriber) => {
       const res = await fetch(api.subscribers.create.path, {
         method: api.subscribers.create.method,
         headers: { "Content-Type": "application/json" },
